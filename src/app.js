@@ -7,6 +7,8 @@ const app = express();
 
 app.disable('x-powered-by');
 
+app.use(express.static('public'));
+
 app.get('/api/metrics', getMetrics);
 
 module.exports = app;
