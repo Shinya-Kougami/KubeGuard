@@ -1,0 +1,42 @@
+{
+  "name": "kubeguard",
+  "version": "1.0.0",
+  "description": "Microservicio de telemetría para auditar métricas de calidad de software y automatización DevSecOps",
+  "main": "src/server.js",
+  "author": "Marvin Gael Robles Loera",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/**",
+    "metrics:cloc": "cloc src tests --exclude-dir=node_modules"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "cloc": "^2.8.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/server.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 85,
+        "branches": 85,
+        "functions": 85,
+        "lines": 85
+      }
+    }
+  }
+}

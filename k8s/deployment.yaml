@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubeguard
+  labels:
+    app: kubeguard
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kubeguard
+  template:
+    metadata:
+      labels:
+        app: kubeguard
+    spec:
+      containers:
+        - name: kubeguard
+          image: kubeguard:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+          readinessProbe:
+            httpGet:
+              path: /api/metrics
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/metrics
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubeguard-service
+  labels:
+    app: kubeguard
+spec:
+  type: NodePort
+  selector:
+    app: kubeguard
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30030
