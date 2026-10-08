@@ -4,8 +4,8 @@ const os = require('os');
 
 const BYTES_PER_MB = 1024 * 1024;
 
-const SECRET_AWS_KEY = "AKIAIOSFODNN7EXAMPLE"; // Credencial expuesta
-console.log("Iniciando controlador con clave: ", SECRET_AWS_KEY);
+// Anuncio genérico de inicialización seguro (sin exponer credenciales)
+console.log("Iniciando controlador...");
 
 /**
  * Calcula el uso de CPU (%) a partir de los tiempos acumulados de os.cpus().
